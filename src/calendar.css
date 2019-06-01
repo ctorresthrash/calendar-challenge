@@ -1,0 +1,45 @@
+:root {
+  --main-color: #2f75b5;
+  --main-color-light: #97bada;
+  --light-gray: #f2f2f2;
+  --gray: #a7a7a7;
+}
+
+.calendar {
+  width: 100%;
+}
+
+.calendar .calendar-header {
+  background-color: var(--main-color);
+  color: white;
+  font-weight: bold;
+}
+
+.calendar .calendar-day {
+  height: 120px;
+  border: solid;
+  border-color: var(--gray);
+  border-width: 1px;
+  font-weight: bold;
+}
+
+.calendar .calendar-week {
+  background-color: white;
+  color: black;
+}
+
+.calendar .calendar-weekend {
+  background-color: var(--light-gray);
+  color: var(--main-color);
+}
+
+.calendar .calendar-not-month {
+  background-color: var(--light-gray);
+  color: var(--gray);
+}
+
+.calendar .calendar-today {
+  font-size: 1.1rem;
+  color: white;
+  background-color: var(--main-color-light);
+}
