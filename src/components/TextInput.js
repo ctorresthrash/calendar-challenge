@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FormFeedback, FormGroup, Input } from "reactstrap";
-import R from "ramda";
+import * as R from "ramda";
 import { format, parse } from "date-fns";
 
 const TextInput = ({
@@ -19,7 +19,9 @@ const TextInput = ({
     defaultValue: format(new Date(), "YYYY-MM-DD"),
     value: field.value ? format(parse(field.value), "YYYY-MM-DD") : ""
   };
-  const [innerType, setInnerType] = useState("text");
+  const [innerType, setInnerType] = useState(
+    type === "date" || type === "time" ? "text" : type
+  );
   const onFocus = () => {
     if ((type === "date" || type === "time") && innerType === "text") {
       setInnerType(type);
