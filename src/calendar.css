@@ -33,7 +33,7 @@
   color: var(--main-color);
 }
 
-.calendar .calendar-not-month {
+.calendar .calendar-offset {
   background-color: var(--light-gray);
   color: var(--gray);
 }

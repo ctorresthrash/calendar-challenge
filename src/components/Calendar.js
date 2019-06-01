@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from "react";
-import { FormGroup, Label, Input } from "reactstrap";
+import { FormGroup, Label, Input, Button } from "reactstrap";
 import "../calendar.css";
-import { getWeekMap } from "../util/index";
+import { getWeekMap, getMonthMap } from "../util/index";
 import { getDaysInMonth, isToday } from "date-fns";
 import cx from "classnames";
+import ModalWrapper from "./ModalWrapper";
+import AddReminderForm from "../containers/AddReminderForm";
 
 const weekDays = getWeekMap();
+const months = getMonthMap();
 
 const today = new Date();
 
@@ -57,8 +60,8 @@ const Calendar = () => {
   console.log(dayOccurrencesPerMonth({ year, month, day: lastDay }));
   return (
     <div>
-      <div className="row">
-        <div className="col">
+      <div className="row align-items-end">
+        <div className="col-6">
           <FormGroup>
             <Label for="exampleSelect">Select Month</Label>
             <Input
@@ -68,20 +71,24 @@ const Calendar = () => {
               value={month}
               onChange={onChangeMonth}
             >
-              <option label="January">0</option>
-              <option label="February">1</option>
-              <option label="March">2</option>
-              <option label="April">3</option>
-              <option label="May">4</option>
-              <option label="June">5</option>
-              <option label="July">6</option>
-              <option label="August">7</option>
-              <option label="September">8</option>
-              <option label="October">9</option>
-              <option label="November">10</option>
-              <option label="December">11</option>
+              {Object.keys(months).map(m => (
+                <option key={m} label={m}>
+                  {months[m]}
+                </option>
+              ))}
             </Input>
           </FormGroup>
+        </div>
+        <div className="col-6 text-right mb-3">
+          <ModalWrapper
+            render={({ hide }) => <AddReminderForm onSubmitSuccess={hide} />}
+          >
+            {({ show }) => (
+              <Button color="primary" onClick={show}>
+                Add Reminder
+              </Button>
+            )}
+          </ModalWrapper>
         </div>
       </div>
       <div className="calendar">
@@ -106,7 +113,7 @@ const Calendar = () => {
                 let isDayFromNextMonth = countingDay > daysInMonth;
                 const dayClasses = cx({
                   "calendar-weekend": day === 0 || day === 6,
-                  "calendar-not-month":
+                  "calendar-offset":
                     isDayFromPreviousMonth || isDayFromNextMonth,
                   "calendar-today":
                     isToday(new Date(year, month, countingDay)) &&
