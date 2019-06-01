@@ -2,20 +2,12 @@ import React, { useState, useCallback } from "react";
 import { FormGroup, Label, Input } from "reactstrap";
 import "../calendar.css";
 import { getWeekMap } from "../util/index";
-import { getDaysInMonth, differenceInWeeks, isToday } from "date-fns";
+import { getDaysInMonth, isToday } from "date-fns";
 import cx from "classnames";
 
 const weekDays = getWeekMap();
 
 const today = new Date();
-const getArrayFromNumber = number => {
-  console.log(number);
-  const array = [];
-  for (let i = 0; i <= number; i++) {
-    array.push(i);
-  }
-  return array;
-};
 
 const getPreviousMonthDay = ({ year, month, offset }) => {
   const previousMonthDay = new Date(year, month - 1, 32 - offset);
@@ -26,22 +18,19 @@ const getPreviousMonthDay = ({ year, month, offset }) => {
 };
 
 const getNextMonthDay = ({ year, month, offset }) => {
-  const nextMonthDay = new Date(year, month + 1, offset + 1);
+  const nextMonthDay = new Date(year, month + 1, offset);
   return nextMonthDay.getDay();
 };
+
+const weeksInMonth = [0, 1, 2, 3, 4, 5];
 
 const Calendar = () => {
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
   const firstDay = new Date(year, month).getDay();
   const daysInMonth = getDaysInMonth(new Date(year, month));
-  const weeksInMonth = Math.abs(
-    differenceInWeeks(
-      new Date(year, month, daysInMonth),
-      new Date(year, month, 1)
-    ) + 1
-  );
-  let countingDay = 0;
+  let countingDay = 1;
+  let offsetDay = 1;
   const onChangeMonth = useCallback(
     ev => {
       setMonth(parseInt(ev.target.value, 10));
@@ -86,7 +75,7 @@ const Calendar = () => {
             </div>
           ))}
         </div>
-        {getArrayFromNumber(weeksInMonth).map(week => {
+        {weeksInMonth.map(week => {
           return (
             <div className="row m-0 p-0">
               {Object.values(weekDays).map((day, dayIndex) => {
@@ -108,13 +97,9 @@ const Calendar = () => {
                     offset: firstDay - day
                   });
                 } else if (isDayFromNextMonth) {
-                  dayLabel = getNextMonthDay({
-                    year,
-                    month,
-                    offset: day - daysInMonth
-                  });
+                  dayLabel = `${offsetDay++}`;
                 } else {
-                  dayLabel = ++countingDay + "";
+                  dayLabel = `${countingDay++}`;
                 }
                 return (
                   <div
