@@ -17,18 +17,35 @@ const getPreviousMonthDay = ({ year, month, offset }) => {
   return daysInPreviousMonth - (offset - 1);
 };
 
-const getNextMonthDay = ({ year, month, offset }) => {
-  const nextMonthDay = new Date(year, month + 1, offset);
-  return nextMonthDay.getDay();
-};
+function dayOccurrencesPerMonth({ year, month, day }) {
+  var dayCount, counter, date;
+  dayCount = 1;
+  counter = 0;
+  date = new Date(year, month, dayCount);
+  while (date.getMonth() === month) {
+    if (date.getDay() === day) {
+      counter += 1;
+    }
+    dayCount += 1;
+    date = new Date(year, month, dayCount);
+  }
+  return counter + 1;
+}
 
-const weeksInMonth = [0, 1, 2, 3, 4];
+const arrayFromNumber = number => {
+  const array = [];
+  for (let i = 0; i < number; i++) {
+    array.push(i);
+  }
+  return array;
+};
 
 const Calendar = () => {
   const [month, setMonth] = useState(today.getMonth());
-  const [year, setYear] = useState(today.getFullYear());
+  const [year] = useState(today.getFullYear());
   const firstDay = new Date(year, month).getDay();
   const daysInMonth = getDaysInMonth(new Date(year, month));
+  const lastDay = new Date(year, month, daysInMonth).getDay();
   let countingDay = 1;
   let offsetDay = 1;
   const onChangeMonth = useCallback(
@@ -37,7 +54,7 @@ const Calendar = () => {
     },
     [setMonth]
   );
-  console.log(month);
+  console.log(dayOccurrencesPerMonth({ year, month, day: lastDay }));
   return (
     <div>
       <div className="row">
@@ -75,7 +92,12 @@ const Calendar = () => {
             </div>
           ))}
         </div>
-        {weeksInMonth.map(week => {
+        {arrayFromNumber(
+          dayOccurrencesPerMonth({ year, month, day: lastDay })
+        ).map(week => {
+          if (countingDay > daysInMonth) {
+            return null;
+          }
           return (
             <div className="row m-0 p-0">
               {Object.values(weekDays).map((day, dayIndex) => {
