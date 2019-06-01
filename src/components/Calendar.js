@@ -22,7 +22,7 @@ const getNextMonthDay = ({ year, month, offset }) => {
   return nextMonthDay.getDay();
 };
 
-const weeksInMonth = [0, 1, 2, 3, 4, 5];
+const weeksInMonth = [0, 1, 2, 3, 4];
 
 const Calendar = () => {
   const [month, setMonth] = useState(today.getMonth());
@@ -87,7 +87,7 @@ const Calendar = () => {
                   "calendar-not-month":
                     isDayFromPreviousMonth || isDayFromNextMonth,
                   "calendar-today":
-                    isToday(new Date(year, month, countingDay + 1)) &&
+                    isToday(new Date(year, month, countingDay)) &&
                     !isDayFromPreviousMonth
                 });
                 if (isDayFromPreviousMonth) {
