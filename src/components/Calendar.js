@@ -57,7 +57,6 @@ const Calendar = () => {
     },
     [setMonth]
   );
-  console.log(dayOccurrencesPerMonth({ year, month, day: lastDay }));
   return (
     <div>
       <div className="row align-items-end">
