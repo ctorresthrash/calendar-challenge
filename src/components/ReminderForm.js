@@ -3,20 +3,22 @@ import { Button } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import TextInput from "./TextInput";
+import { format } from "date-fns";
 
 const validationSchema = Yup.object().shape({
   content: Yup.string()
     .max(30, "30 characters at most")
     .required("Required"),
   city: Yup.string().required("Required"),
-  color: Yup.string().required("Required")
+  date: Yup.string().required("Required"),
+  time: Yup.string().required("Required")
 });
 
 const ReminderForm = ({ onSubmit, initialValues }) => {
   return (
     <Formik
-      enableReinitialize
       onSubmit={onSubmit}
+      enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
     >
@@ -39,8 +41,17 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
             <Field
               type="date"
               name="date"
+              min={format(new Date(), "YYYY-MM-DD")}
               label="Date"
               placeholder="Reminder's date"
+              component={TextInput}
+            />
+            <Field
+              type="time"
+              name="time"
+              min={format(new Date(), "HH:mm a")}
+              label="Time"
+              placeholder="Reminder's Time"
               component={TextInput}
             />
             <Button type="submit" color="primary">

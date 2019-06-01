@@ -15,10 +15,6 @@ const TextInput = ({
   const error = R.propOr(null, name, errors);
   const touch = R.propOr(false, name, touched);
   const isInvalid = touch && error;
-  const dateProps = {
-    defaultValue: format(new Date(), "YYYY-MM-DD"),
-    value: field.value ? format(parse(field.value), "YYYY-MM-DD") : ""
-  };
   const [innerType, setInnerType] = useState(
     type === "date" || type === "time" ? "text" : type
   );
@@ -43,7 +39,6 @@ const TextInput = ({
         {...field}
         invalid={isInvalid ? true : null}
         {...props}
-        {...innerType === "date" && dateProps}
         onFocus={onFocus}
         onBlur={onBlur}
       />
