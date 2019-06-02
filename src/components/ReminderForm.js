@@ -1,9 +1,12 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Button } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import TextInput from "./TextInput";
 import { format } from "date-fns";
+import { connect } from "react-redux";
+import { actions } from "../reducers/forecast";
+import StateForecast from "../containers/StateForecast";
 
 const validationSchema = Yup.object().shape({
   content: Yup.string()
@@ -33,6 +36,63 @@ const ColorInput = ({ field: { value, name }, form: { setFieldValue } }) => {
   );
 };
 
+const FetchForecastReminderForm = connect(
+  null,
+  {
+    fetchForecast: actions.fetchForecast
+  }
+)(({ values, fetchForecast }) => {
+  const { date, time, city } = values;
+  useEffect(() => {
+    if (date && time && city) {
+      fetchForecast({ date, time, city });
+    }
+  }, [date, time, city, fetchForecast]);
+  return (
+    <div>
+      <div className="row">
+        <div className="col">
+          <StateForecast />
+        </div>
+      </div>
+      <Form>
+        <Field
+          name="content"
+          label="Content"
+          placeholder="Enter your reminder"
+          component={TextInput}
+        />
+        <Field
+          name="city"
+          label="City"
+          placeholder="Enter your city"
+          component={TextInput}
+        />
+        <Field
+          type="date"
+          name="date"
+          min={format(new Date(), "YYYY-MM-DD")}
+          label="Date"
+          placeholder="Reminder's date"
+          component={TextInput}
+        />
+        <Field
+          type="time"
+          name="time"
+          min={format(new Date(), "HH:mm a")}
+          label="Time"
+          placeholder="Reminder's Time"
+          component={TextInput}
+        />
+        <Field name="color" component={ColorInput} />
+        <Button type="submit" color="primary">
+          Submit
+        </Button>
+      </Form>
+    </div>
+  );
+});
+
 const ReminderForm = ({ onSubmit, initialValues }) => {
   return (
     <Formik
@@ -40,46 +100,8 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
       enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
-    >
-      {() => {
-        return (
-          <Form>
-            <Field
-              name="content"
-              label="Content"
-              placeholder="Enter your reminder"
-              component={TextInput}
-            />
-            <Field
-              name="city"
-              label="City"
-              placeholder="Enter your city"
-              component={TextInput}
-            />
-            <Field
-              type="date"
-              name="date"
-              min={format(new Date(), "YYYY-MM-DD")}
-              label="Date"
-              placeholder="Reminder's date"
-              component={TextInput}
-            />
-            <Field
-              type="time"
-              name="time"
-              min={format(new Date(), "HH:mm a")}
-              label="Time"
-              placeholder="Reminder's Time"
-              component={TextInput}
-            />
-            <Field name="color" component={ColorInput} />
-            <Button type="submit" color="primary">
-              Submit
-            </Button>
-          </Form>
-        );
-      }}
-    </Formik>
+      component={FetchForecastReminderForm}
+    />
   );
 };
 
