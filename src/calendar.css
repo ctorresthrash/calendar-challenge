@@ -51,7 +51,6 @@
 
 .calendar .calendar-day .calendar-reminder-container .calendar-reminder {
   word-wrap: break-word;
-  cursor: pointer;
   border-radius: 5px;
   font-size: 10px;
   text-align: left;

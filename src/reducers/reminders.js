@@ -7,7 +7,7 @@ import * as R from "ramda";
 const getCurrentReminder = createSelector(
   state => state.reminders,
   ({ currentReminder, reminders }) => {
-    return R.find(reminder => reminder.id === currentReminder, reminders);
+    return reminders[currentReminder];
   }
 );
 
@@ -76,9 +76,12 @@ export default handleActions(
           ...state,
           reminders: {
             ...state.reminders,
-            [action.payload.reminders.id]: action.payload.reminder
+            [action.payload.reminder.id]: action.payload.reminder
           }
         };
+      },
+      SET_CURRENT_REMINDER: (state, action) => {
+        return { ...state, currentReminder: action.payload.reminder };
       }
     }
   },

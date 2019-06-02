@@ -8,7 +8,7 @@ import ModalWrapper from "./ModalWrapper";
 import AddReminderForm from "../containers/AddReminderForm";
 import { connect } from "react-redux";
 import { selectors } from "../reducers/reminders";
-import Reminder from "./Reminder";
+import Reminder from "./ModalWrappedReminder";
 import * as R from "ramda";
 
 const weekDays = getWeekMap();
