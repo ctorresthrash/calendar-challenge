@@ -116,7 +116,7 @@ const Calendar = ({ reminders }) => {
                 let isDayFromPreviousMonth = week === 0 && day < firstDay;
                 let isDayFromNextMonth = countingDay > daysInMonth;
                 let dayDate = format(
-                  new Date(year, month, countingDay),
+                  new Date(year, month, countingDay + offsetDay - 1),
                   "YYYY-MM-DD"
                 );
                 let dayReminders = reminders[dayDate] || [];
