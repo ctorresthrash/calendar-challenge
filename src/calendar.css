@@ -50,12 +50,14 @@
 }
 
 .calendar .calendar-day .calendar-reminder-container .calendar-reminder {
-  word-wrap: break-word;
   border-radius: 5px;
   font-size: 10px;
   text-align: left;
   padding: 5px 5px;
   margin: 2px 5px;
+  -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.32);
+  -moz-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.32);
 }
 
 .calendar .calendar-day .calendar-reminder-container .calendar-reminder p {
