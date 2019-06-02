@@ -2,10 +2,14 @@ import React, { useState, useCallback } from "react";
 import { FormGroup, Label, Input, Button } from "reactstrap";
 import "../calendar.css";
 import { getWeekMap, getMonthMap } from "../util/index";
-import { getDaysInMonth, isToday } from "date-fns";
+import { getDaysInMonth, isToday, format } from "date-fns";
 import cx from "classnames";
 import ModalWrapper from "./ModalWrapper";
 import AddReminderForm from "../containers/AddReminderForm";
+import { connect } from "react-redux";
+import { selectors } from "../reducers/reminders";
+import Reminder from "./Reminder";
+import * as R from "ramda";
 
 const weekDays = getWeekMap();
 const months = getMonthMap();
@@ -43,7 +47,7 @@ const arrayFromNumber = number => {
   return array;
 };
 
-const Calendar = () => {
+const Calendar = ({ reminders }) => {
   const [month, setMonth] = useState(today.getMonth());
   const [year] = useState(today.getFullYear());
   const firstDay = new Date(year, month).getDay();
@@ -80,6 +84,7 @@ const Calendar = () => {
         </div>
         <div className="col-6 text-right mb-3">
           <ModalWrapper
+            title="Add Reminder"
             render={({ hide }) => <AddReminderForm onSubmitSuccess={hide} />}
           >
             {({ show }) => (
@@ -110,6 +115,11 @@ const Calendar = () => {
                 let dayLabel = null;
                 let isDayFromPreviousMonth = week === 0 && day < firstDay;
                 let isDayFromNextMonth = countingDay > daysInMonth;
+                let dayDate = format(
+                  new Date(year, month, countingDay),
+                  "YYYY-MM-DD"
+                );
+                let dayReminders = reminders[dayDate] || [];
                 const dayClasses = cx({
                   "calendar-weekend": day === 0 || day === 6,
                   "calendar-offset":
@@ -134,7 +144,19 @@ const Calendar = () => {
                     className={`col p-0 text-center calendar-day ${dayClasses}`}
                     key={`${dayIndex}`}
                   >
-                    <label>{dayLabel}</label>
+                    <div className="row justify-content-between mb-1">
+                      <div className="col-auto pl-4">
+                        <label>{dayLabel}</label>
+                      </div>
+                    </div>
+                    <div className="row calendar-reminder-container">
+                      {!R.isEmpty(dayReminders) &&
+                        dayReminders.map(reminder => (
+                          <div className="col-12">
+                            <Reminder key={reminder.id} reminder={reminder} />
+                          </div>
+                        ))}
+                    </div>
                   </div>
                 );
               })}
@@ -146,4 +168,6 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default connect(state => ({
+  reminders: selectors.getRemindersByDay(state)
+}))(Calendar);

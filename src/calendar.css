@@ -45,7 +45,7 @@
 }
 
 .calendar .calendar-day .calendar-reminder-container {
-  height: 100px;
+  height: 80px;
   overflow-y: scroll;
 }
 
@@ -53,4 +53,5 @@
   word-wrap: break-word;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 10px;
 }
