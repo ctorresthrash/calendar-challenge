@@ -3,6 +3,7 @@ import { createActions, handleActions } from "redux-actions";
 import uuid from "uuid/v1";
 import { createSelector } from "reselect";
 import * as R from "ramda";
+import { parse } from "date-fns";
 
 const getCurrentReminder = createSelector(
   state => state.reminders,
@@ -24,7 +25,22 @@ const getRemindersByDay = createSelector(
     return R.pipe(
       Object.keys,
       R.map(key => reminders[key]),
-      R.groupBy(reminder => reminder.date)
+      R.groupBy(reminder => reminder.date),
+      function sortByTime(grouped) {
+        const nextGrouped = {};
+        Object.keys(grouped).forEach(key => {
+          const getTime = R.pipe(
+            R.propOr("", "time"),
+            R.concat(`${key} `),
+            R.trim,
+            parse
+          );
+          nextGrouped[key] = R.sort((a, b) => {
+            return getTime(a) - getTime(b);
+          }, grouped[key]);
+        });
+        return nextGrouped;
+      }
     )(reminders);
   }
 );
