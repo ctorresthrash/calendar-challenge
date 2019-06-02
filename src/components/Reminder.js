@@ -11,9 +11,9 @@ const Reminder = ({ reminder }) => {
         className="calendar-reminder"
         style={{ backgroundColor: reminder.color }}
       >
-        <label style={{ color: color.isDark() ? "#f2f2f2" : "#191919" }}>
+        <p style={{ color: color.isDark() ? "#f2f2f2" : "#191919" }}>
           {reminder.content}
-        </label>
+        </p>
       </div>
     );
   }

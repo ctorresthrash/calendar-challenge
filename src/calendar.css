@@ -54,4 +54,11 @@
   cursor: pointer;
   border-radius: 5px;
   font-size: 10px;
+  text-align: left;
+  padding: 5px 5px;
+  margin: 2px 5px;
+}
+
+.calendar .calendar-day .calendar-reminder-container .calendar-reminder p {
+  margin-bottom: 0px;
 }
