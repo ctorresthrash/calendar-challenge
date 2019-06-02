@@ -15,6 +15,7 @@ const ModalWrappedReminder = connect(
   if (!R.isEmpty(reminder)) {
     return (
       <ModalWrapper
+        title="Update Reminder"
         render={({ hide }) => {
           const onSubmitSuccess = useCallback(() => {
             setCurrentReminder(null);
