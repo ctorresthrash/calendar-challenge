@@ -11,7 +11,8 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
   city: Yup.string().required("Required"),
   date: Yup.string().required("Required"),
-  time: Yup.string().required("Required")
+  time: Yup.string().required("Required"),
+  color: Yup.string().required("Required")
 });
 
 const ReminderForm = ({ onSubmit, initialValues }) => {
@@ -53,6 +54,20 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
               label="Time"
               placeholder="Reminder's Time"
               component={TextInput}
+            />
+            <Field
+              name="color"
+              component={({ field: { name, value, onChange } }) => {
+                return (
+                  <div className="row">
+                    <div className="col">
+                      <label>Reminder's display color</label>
+                      {` `}
+                      <input type="color" value={value} onChange={onChange} />
+                    </div>
+                  </div>
+                );
+              }}
             />
             <Button type="submit" color="primary">
               Submit

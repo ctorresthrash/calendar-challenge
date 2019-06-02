@@ -2,11 +2,14 @@ import React, { useCallback } from "react";
 import ReminderForm from "../components/ReminderForm";
 import { connect } from "react-redux";
 import { actions } from "../reducers/reminders";
+import { getPrimaryColor } from "../util";
 
 const getInitialValues = () => ({
   content: "",
   city: "",
-  date: ""
+  date: "",
+  time: "",
+  color: getPrimaryColor()
 });
 
 const AddReminderForm = connect(

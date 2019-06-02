@@ -22,3 +22,5 @@ export const getMonthMap = () => ({
   November: 10,
   December: 11
 });
+
+export const getPrimaryColor = () => "#2f75b5";
