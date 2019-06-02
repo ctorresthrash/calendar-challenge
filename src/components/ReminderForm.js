@@ -45,7 +45,6 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
         return (
           <Form>
             <Field
-              type="textarea"
               name="content"
               label="Content"
               placeholder="Enter your reminder"
