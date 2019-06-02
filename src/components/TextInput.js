@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FormFeedback, FormGroup, Input } from "reactstrap";
 import * as R from "ramda";
-import { format, parse } from "date-fns";
 
 const TextInput = ({
   field: { name, ...field },
