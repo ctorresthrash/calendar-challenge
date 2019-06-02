@@ -39,7 +39,18 @@
 }
 
 .calendar .calendar-today {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: white;
   background-color: var(--main-color-light);
+}
+
+.calendar .calendar-day .calendar-reminder-container {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.calendar .calendar-day .calendar-reminder-container .calendar-reminder {
+  word-wrap: break-word;
+  cursor: pointer;
+  border-radius: 5px;
 }
