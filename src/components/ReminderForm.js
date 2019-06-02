@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Button } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -14,6 +14,24 @@ const validationSchema = Yup.object().shape({
   time: Yup.string().required("Required"),
   color: Yup.string().required("Required")
 });
+
+const ColorInput = ({ field: { value, name }, form: { setFieldValue } }) => {
+  const onChangeColor = useCallback(
+    ev => {
+      setFieldValue(name, ev.target.value);
+    },
+    [name, setFieldValue]
+  );
+  return (
+    <div className="row">
+      <div className="col">
+        <label>Reminder's display color</label>
+        {` `}
+        <input type="color" value={value} onChange={onChangeColor} />
+      </div>
+    </div>
+  );
+};
 
 const ReminderForm = ({ onSubmit, initialValues }) => {
   return (
@@ -55,20 +73,7 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
               placeholder="Reminder's Time"
               component={TextInput}
             />
-            <Field
-              name="color"
-              component={({ field: { name, value, onChange } }) => {
-                return (
-                  <div className="row">
-                    <div className="col">
-                      <label>Reminder's display color</label>
-                      {` `}
-                      <input type="color" value={value} onChange={onChange} />
-                    </div>
-                  </div>
-                );
-              }}
-            />
+            <Field name="color" component={ColorInput} />
             <Button type="submit" color="primary">
               Submit
             </Button>
