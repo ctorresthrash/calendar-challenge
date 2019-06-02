@@ -17,7 +17,8 @@ const createdActions = createActions({
     FETCH_FORECAST_ATTEMPT: null,
     FETCH_FORECAST_FAILURE: payloadIdentity("failureMessage"),
     FETCH_FORECAST_SUCCESS: null,
-    SET_FORECAST: payloadIdentity("forecast")
+    SET_FORECAST: payloadIdentity("forecast"),
+    RESET_STATE: null
   }
 }).forecast;
 
@@ -108,6 +109,9 @@ export default handleActions(
       }),
       SET_FORECAST: (state, action) => {
         return { ...state, forecast: action.payload.forecast };
+      },
+      RESET_STATE: state => {
+        return { ...state, ...initialState };
       }
     }
   },

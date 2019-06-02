@@ -39,15 +39,19 @@ const ColorInput = ({ field: { value, name }, form: { setFieldValue } }) => {
 const FetchForecastReminderForm = connect(
   null,
   {
-    fetchForecast: actions.fetchForecast
+    fetchForecast: actions.fetchForecast,
+    resetState: actions.resetState
   }
-)(({ values, fetchForecast }) => {
+)(({ values, fetchForecast, resetState }) => {
   const { date, time, city } = values;
   useEffect(() => {
     if (date && time && city) {
       fetchForecast({ date, time, city });
     }
-  }, [date, time, city, fetchForecast]);
+    return () => {
+      resetState();
+    };
+  }, [date, time, city, fetchForecast, resetState]);
   return (
     <div>
       <div className="row">
