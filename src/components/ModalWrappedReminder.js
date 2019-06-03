@@ -5,14 +5,17 @@ import UpdateReminderForm from "../containers/UpdateReminderForm";
 import { connect } from "react-redux";
 import { actions } from "../reducers/reminders";
 import * as R from "ramda";
+import Color from "color";
 
 const ModalWrappedReminder = connect(
   null,
   {
-    setCurrentReminder: actions.setCurrentReminder
+    setCurrentReminder: actions.setCurrentReminder,
+    deleteReminders: actions.deleteReminders
   }
-)(({ reminder, setCurrentReminder }) => {
+)(({ reminder, setCurrentReminder, deleteReminders }) => {
   if (!R.isEmpty(reminder)) {
+    const color = Color(reminder.color);
     return (
       <ModalWrapper
         title="Update Reminder"
@@ -29,10 +32,21 @@ const ModalWrappedReminder = connect(
             setCurrentReminder(reminder.id);
             show();
           }, [show]);
+
+          const onClickDelete = useCallback(() => {
+            if (window.confirm("Do you want to delete this reminder?")) {
+              deleteReminders([reminder.id]);
+            }
+          }, []);
           return (
-            <div onClick={onClickReminder} style={{ cursor: "pointer" }}>
-              <Reminder reminder={reminder} />
-            </div>
+            <Reminder reminder={reminder} onClick={onClickReminder}>
+              <div style={{ cursor: "pointer" }} onClick={onClickDelete}>
+                <i
+                  className="fa fa-times"
+                  style={{ color: color.isDark() ? "#f2f2f2" : "#191919" }}
+                />
+              </div>
+            </Reminder>
           );
         }}
       </ModalWrapper>

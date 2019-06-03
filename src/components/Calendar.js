@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { selectors } from "../reducers/reminders";
 import Reminder from "./ModalWrappedReminder";
 import * as R from "ramda";
+import DeleteAllReminders from "../containers/DeleteAllReminders";
 
 const weekDays = getWeekMap();
 const months = getMonthMap();
@@ -148,6 +149,11 @@ const Calendar = ({ reminders }) => {
                       <div className="col-auto pl-4">
                         <label>{dayLabel}</label>
                       </div>
+                      {!R.isEmpty(dayReminders) && (
+                        <div className="col-auto">
+                          <DeleteAllReminders reminders={dayReminders} />
+                        </div>
+                      )}
                     </div>
                     <div className="row calendar-reminder-container">
                       {!R.isEmpty(dayReminders) &&

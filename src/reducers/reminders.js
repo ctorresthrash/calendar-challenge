@@ -57,7 +57,7 @@ const createdActions = createActions({
   reminders: {
     ADD_REMINDER: reminderPayload,
     UPDATE_REMINDER: reminderPayload,
-    DELETE_REMINDER: payloadIdentity("reminderId"),
+    DELETE_REMINDERS: payloadIdentity("reminderIds"),
     SET_CURRENT_REMINDER: reminderPayload
   }
 }).reminders;
@@ -94,6 +94,12 @@ export default handleActions(
             ...state.reminders,
             [action.payload.reminder.id]: action.payload.reminder
           }
+        };
+      },
+      DELETE_REMINDERS: (state, action) => {
+        return {
+          ...state,
+          reminders: R.omit(action.payload.reminderIds, state.reminders)
         };
       },
       SET_CURRENT_REMINDER: (state, action) => {
