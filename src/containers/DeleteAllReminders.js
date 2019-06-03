@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { actions } from "../reducers/reminders";
-import { Button } from "reactstrap";
 import { connect } from "react-redux";
 import * as R from "ramda";
 
@@ -18,9 +17,11 @@ const DeleteAllReminders = connect(
     }
   }, [deleteReminders, reminders]);
   return (
-    <Button onClick={onClickDeleteAll} color="danger" size="sm">
-      Delete All <i className="fa fa-times" />
-    </Button>
+    <i
+      onClick={onClickDeleteAll}
+      className="fa fa-trash"
+      style={{ cursor: "pointer", color: "red" }}
+    />
   );
 });
 

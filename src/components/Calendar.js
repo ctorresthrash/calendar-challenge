@@ -150,7 +150,7 @@ const Calendar = ({ reminders }) => {
                         <label>{dayLabel}</label>
                       </div>
                       {!R.isEmpty(dayReminders) && (
-                        <div className="col-auto">
+                        <div className="col-auto pr-4">
                           <DeleteAllReminders reminders={dayReminders} />
                         </div>
                       )}

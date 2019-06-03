@@ -47,7 +47,7 @@ const ModalWrappedReminder = connect(
           return (
             <Reminder reminder={reminder} onClick={onClickReminder}>
               <div style={{ cursor: "pointer" }} onClick={onClickDelete}>
-                <i className={`fa fa-times ${classname}`.trim()} />
+                <i className={`fa fa-trash ${classname}`.trim()} />
               </div>
             </Reminder>
           );
