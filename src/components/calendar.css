@@ -62,4 +62,16 @@
 
 .calendar .calendar-day .calendar-reminder-container .calendar-reminder p {
   margin-bottom: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.dark-text {
+  color: #191919;
+}
+
+.light-text {
+  color: #f2f2f2;
 }

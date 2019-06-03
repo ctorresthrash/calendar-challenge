@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { actions } from "../reducers/reminders";
 import * as R from "ramda";
 import Color from "color";
+import cx from "classnames";
 
 const ModalWrappedReminder = connect(
   null,
@@ -16,6 +17,10 @@ const ModalWrappedReminder = connect(
 )(({ reminder, setCurrentReminder, deleteReminders }) => {
   if (!R.isEmpty(reminder)) {
     const color = Color(reminder.color);
+    const classname = cx({
+      "dark-text": color.isLight(),
+      "light-text": color.isDark()
+    });
     return (
       <ModalWrapper
         title="Update Reminder"
@@ -38,13 +43,11 @@ const ModalWrappedReminder = connect(
               deleteReminders([reminder.id]);
             }
           }, []);
+
           return (
             <Reminder reminder={reminder} onClick={onClickReminder}>
               <div style={{ cursor: "pointer" }} onClick={onClickDelete}>
-                <i
-                  className="fa fa-times"
-                  style={{ color: color.isDark() ? "#f2f2f2" : "#191919" }}
-                />
+                <i className={`fa fa-times ${classname}`.trim()} />
               </div>
             </Reminder>
           );
