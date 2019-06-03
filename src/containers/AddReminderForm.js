@@ -26,7 +26,10 @@ const AddReminderForm = connect(
     [addReminder, onSubmitSuccess]
   );
   return (
-    <ReminderForm onSubmit={onSubmit} initialValues={getInitialValues()} />
+    <ReminderForm
+      submitReminder={onSubmit}
+      initialValues={getInitialValues()}
+    />
   );
 });
 

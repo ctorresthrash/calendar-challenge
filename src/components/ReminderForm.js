@@ -45,14 +45,16 @@ const ColorInput = ({ field: { value, name }, form: { setFieldValue } }) => {
   );
 };
 
-const ReminderForm = ({ onSubmit, initialValues }) => {
+const ReminderForm = ({ submitReminder, initialValues }) => {
   return (
     <Formik
-      onSubmit={onSubmit}
+      onSubmit={values => {
+        submitReminder(values);
+      }}
       enableReinitialize
       initialValues={initialValues}
       validate={validate}
-      component={({ values }) => {
+      component={({ values, handleSubmit }) => {
         return (
           <div>
             <div className="row">
@@ -60,7 +62,7 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
                 <StateForecast {...values} />
               </div>
             </div>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Field
                 name="content"
                 label="Content"

@@ -18,7 +18,9 @@ const UpdateReminderForm = connect(
     },
     [updateReminder, onSubmitSuccess]
   );
-  return <ReminderForm onSubmit={onSubmit} initialValues={initialValues} />;
+  return (
+    <ReminderForm submitReminder={onSubmit} initialValues={initialValues} />
+  );
 });
 
 UpdateReminderForm.displayName = "UpdateReminderForm";
