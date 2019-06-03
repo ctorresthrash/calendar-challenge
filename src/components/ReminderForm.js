@@ -1,20 +1,31 @@
 import React, { useCallback } from "react";
 import { Button } from "reactstrap";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 import TextInput from "./TextInput";
 import { format } from "date-fns";
 import StateForecast from "../containers/StateForecast";
 
-const validationSchema = Yup.object().shape({
-  content: Yup.string()
-    .max(30, "30 characters at most")
-    .required("Required"),
-  city: Yup.string().required("Required"),
-  date: Yup.string().required("Required"),
-  time: Yup.string().required("Required"),
-  color: Yup.string().required("Required")
-});
+export const validate = values => {
+  const errors = {};
+  if (!values.content) {
+    errors.content = "Required";
+  } else if (values.content.length > 30) {
+    errors.content = "30 chars at most";
+  }
+  if (!values.city) {
+    errors.city = "Required";
+  }
+  if (!values.date) {
+    errors.date = "Required";
+  }
+  if (!values.time) {
+    errors.time = "Required";
+  }
+  if (!values.color) {
+    errors.color = "Required";
+  }
+  return errors;
+};
 
 const ColorInput = ({ field: { value, name }, form: { setFieldValue } }) => {
   const onChangeColor = useCallback(
@@ -40,7 +51,7 @@ const ReminderForm = ({ onSubmit, initialValues }) => {
       onSubmit={onSubmit}
       enableReinitialize
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      validate={validate}
       component={({ values }) => {
         return (
           <div>
