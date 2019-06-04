@@ -24,3 +24,5 @@ export const getMonthMap = () => ({
 });
 
 export const getPrimaryColor = () => "#2f75b5";
+
+export const getOpenWeatherBaseUrl = () => "http://api.openweathermap.org";

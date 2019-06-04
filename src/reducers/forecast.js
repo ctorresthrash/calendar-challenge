@@ -4,10 +4,11 @@ import Axios from "axios";
 import * as R from "ramda";
 import { parse, differenceInDays } from "date-fns";
 import { createSelector } from "reselect";
+import { getOpenWeatherBaseUrl } from "../util";
 
 const OPEN_WEATHER_API_KEY = "c50d82d239feff96cee0695ce898171e";
 
-Axios.defaults.baseURL = process.env.REACT_APP_OPEN_WEATHER_BASE_URL;
+Axios.defaults.baseURL = getOpenWeatherBaseUrl();
 Axios.defaults.timeout = 30000;
 Axios.defaults.headers.post["Content-Type"] = "application/json";
 Axios.defaults.withCredentials = false;

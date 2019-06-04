@@ -1,6 +1,7 @@
 import React from "react";
 import * as R from "ramda";
 import "./Forecast.css";
+import { getOpenWeatherBaseUrl } from "../util";
 
 const Forecast = ({ forecast }) => {
   const weather = R.pathOr(null, ["weather", "0"], forecast);
@@ -11,7 +12,7 @@ const Forecast = ({ forecast }) => {
       {R.propOr(null, "icon", weather) && (
         <img
           alt=""
-          src={`${process.env.REACT_APP_OPEN_WEATHER_BASE_URL}/img/w/${R.propOr(
+          src={`${getOpenWeatherBaseUrl()}/img/w/${R.propOr(
             null,
             "icon",
             weather
